@@ -34,9 +34,6 @@ int main(int argc, char **argv) {
         if (c == -1)
             break;
         switch (c) {
-        case '0':
-            puts("word");
-            break;
         case 'i':
             iterations = atoi(optarg);
             break;
