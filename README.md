@@ -1,6 +1,6 @@
 # Simple Timing Attack
 
-This program implements a simple [timing attack](http://en.wikipedia.org/wiki/Timing_attack). It measures the execution time of a target program over a number of iterations, rotating through a character set and appending the fastest character to the result.
+This program implements a simple [timing attack](http://en.wikipedia.org/wiki/Timing_attack). It measures the execution time of a target program over a number of iterations, rotating through a character set and appending the fastest (or slowest) character to the result.
 
 ## Requirements:
 
@@ -19,3 +19,6 @@ Note: OSX [does not currently implement](http://stackoverflow.com/questions/5167
       --l, --length          specify password length
       --i, --iterations      specify iterations per character
       --c, --charset         specify possible password characters (alphanum default)
+      --p, --prefer-slow     choose the slowest iteration (fastest is default)
+      --q, --quiet           only output final result
+      --v, --verbose         print timing results after iterations

@@ -8,13 +8,19 @@
 void usage() {
     fprintf(stderr, "Usage: timingattack [options...] <invocation>\n");
     fprintf(stderr, "Options:\n");
-    fprintf(stderr, "  --l, --length     \t specify password length\n");
-    fprintf(stderr, "  --i, --iterations \t specify iterations per character\n");
-    fprintf(stderr, "  --c, --charset    \t specify possible password characters (alphanum default)\n");
+    fprintf(stderr, "  --l, --length      \t specify password length\n");
+    fprintf(stderr, "  --i, --iterations  \t specify iterations per character\n");
+    fprintf(stderr, "  --c, --charset     \t specify possible password characters (alphanum default)\n");
+    fprintf(stderr, "  --p, --prefer-slow \t choose the slowest iteration (fastest is default)");
+    fprintf(stderr, "  --q, --quiet       \t only output final result\n");
+    fprintf(stderr, "  --v, --verbose     \t print timing results after iterations\n");
     _exit(1);
 }
 
 int main(int argc, char **argv) {
+    int quiet = 0;
+    int verbose = 0;
+    int prefer_slow = 0;
     static int verbose_flag;
     unsigned int iterations = 100;
     unsigned int length = 20;
@@ -25,9 +31,13 @@ int main(int argc, char **argv) {
     int c;
     while (1) {
         static struct option long_options[] = {
-            { "length",     required_argument, 0, 'l' },
-            { "iterations", required_argument, 0, 'i' },
-            { "charset",    required_argument, 0, 'c' },
+            { "length",      required_argument, 0, 'l' },
+            { "iterations",  required_argument, 0, 'i' },
+            { "charset",     required_argument, 0, 'c' },
+            { "prefer-slow", required_argument, 0, 'p' },
+            { "quiet",       no_argument,       0, 'q' },
+            { "verbose",     no_argument,       0, 'v' },
+            { 0,             0,                 0,  0  }
         };
         int option_index = 0;
         c = getopt_long(argc, argv, "i:", long_options, &option_index);
@@ -42,6 +52,15 @@ int main(int argc, char **argv) {
             break;
         case 'c':
             charset = optarg;
+            break;
+        case 'p':
+            prefer_slow = 1;
+            break;
+        case 'q':
+            quiet = 1;
+            break;
+        case 'v':
+            verbose++;
             break;
         default:
             usage();
@@ -76,12 +95,20 @@ int main(int argc, char **argv) {
             }
             clock_gettime(CLOCK_REALTIME, &end);
             time = (unsigned long)(end.tv_nsec - begin.tv_nsec)/iterations;
-            printf("%s\n", password);
-            if (!ii || time < best_time) {
+            if (!quiet) {
+                if (verbose)
+                    printf("%c: %lu\n", charset[ii], time);
+                else
+                    printf("%s\n", password);
+            }
+            if (!ii || (time < best_time && !prefer_slow)
+                    || (time > best_time && prefer_slow)) {
                 best_time = time;
                 best_candidate = charset[ii];
             }
         }
+        if (verbose)
+            printf("Best run ('%c'): %lu\n", best_candidate, best_time);
         password[i] = best_candidate;
     }
 
