@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
             { "length",      required_argument, 0, 'l' },
             { "iterations",  required_argument, 0, 'i' },
             { "charset",     required_argument, 0, 'c' },
-            { "prefer-slow", required_argument, 0, 'p' },
+            { "prefer-slow", no_argument,       0, 'p' },
             { "quiet",       no_argument,       0, 'q' },
             { "verbose",     no_argument,       0, 'v' },
             { 0,             0,                 0,  0  }
@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
     int i, ii, iii;
 
     for (i = 0; i < length; i++) {
-        char best_candidate = 'A';
+        char best_candidate;
         for (ii = 0; ii < strlen(charset); ii++) {
             password[i] = charset[ii];
             password[i+1] = '\0';
