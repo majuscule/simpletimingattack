@@ -8,10 +8,10 @@
 void usage() {
     fprintf(stderr, "Usage: timingattack [options...] <invocation>\n");
     fprintf(stderr, "Options:\n");
-    fprintf(stderr, "  --l, --length      \t specify password length\n");
-    fprintf(stderr, "  --i, --iterations  \t specify iterations per character\n");
-    fprintf(stderr, "  --c, --charset     \t specify possible password characters (alphanum default)\n");
-    fprintf(stderr, "  --p, --prefer-slow \t choose the slowest iteration (fastest is default)");
+    fprintf(stderr, "  --l, --length      \t specify password length (20 is default)\n");
+    fprintf(stderr, "  --i, --iterations  \t specify iterations per character (100 is default)\n");
+    fprintf(stderr, "  --c, --charset     \t specify possible password characters (alphanum is default)\n");
+    fprintf(stderr, "  --p, --prefer-slow \t choose the slowest iteration (fastest is default)\n");
     fprintf(stderr, "  --q, --quiet       \t only output final result\n");
     fprintf(stderr, "  --v, --verbose     \t print timing results after iterations\n");
     _exit(1);

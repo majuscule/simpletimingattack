@@ -16,9 +16,9 @@ Note: OSX [does not currently implement](http://stackoverflow.com/questions/5167
 
     Usage: timingattack [options...] <invocation>
     Options:
-      --l, --length          specify password length
-      --i, --iterations      specify iterations per character
-      --c, --charset         specify possible password characters (alphanum default)
+      --l, --length          specify password length (20 is default)
+      --i, --iterations      specify iterations per character (100 is default)
+      --c, --charset         specify possible password characters (alphanum is default)
       --p, --prefer-slow     choose the slowest iteration (fastest is default)
       --q, --quiet           only output final result
       --v, --verbose         print timing results after iterations
